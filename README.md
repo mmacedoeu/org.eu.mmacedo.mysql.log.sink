@@ -27,7 +27,7 @@ usage: Mysql.Log.Sink
  -startDate,--startDate <arg>               Start Date in
  -threshold,--threshold <arg>               Threshold limit (integer >0)
  -url,--spring.datasource.url <arg>         database url
-`
+```
 
 ## Sql
 
