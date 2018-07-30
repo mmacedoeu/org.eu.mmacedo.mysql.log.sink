@@ -16,19 +16,18 @@ To run a local instance you use either `mvn spring-boot:run` or `mvnw spring-boo
 `java -jar ./target/org.eu.mmacedo.mysql.log.sink-0.0.1-SNAPSHOT.jar --help`
 ```text
 usage: Mysql.Log.Sink
- -accesslog,--accesslog <arg>               Access file to process
- -ansi,--spring.output.ansi.enabled <arg>
- -c,--clear                                 empty database before
-                                            processing
- -duration,--duration <arg>                 Duration interval (hourly or
-                                            daily)
- -h,--help                                  show help.
- -q,--query                                 no processing sink, just query
- -startDate,--startDate <arg>               Start Date in
- -threshold,--threshold <arg>               Threshold limit (integer >0)
- -url,--spring.datasource.url <arg>         database url
+    --accesslog <arg>                    Access file to process
+ -c,--clear                              empty database before processing
+    --duration <arg>                     Duration interval (hourly or
+                                         daily)
+ -h,--help                               show help.
+ -q,--query                              no processing sink, just query
+    --spring.datasource.url <arg>        database url
+    --spring.output.ansi.enabled <arg>
+    --startDate <arg>                    Start Date in
+    --threshold <arg>                    Threshold limit (integer >0)
 ```
-###Example
+### Example
 
 `java -jar ./target/org.eu.mmacedo.mysql.log.sink-0.0.1-SNAPSHOT.jar --startDate=2017-01-01.15:00:00 --duration=hourly --threshold=200 --clear --accesslog="access.log" --spring.datasource.url="jdbc:mysql://localhost:3306/log?user=root&password=abc123&useServerPrepStmts=false&rewriteBatchedStatements=true&sessionVariables=@@global.general_log=OFF,bulk_insert_buffer_size=16777216,SQL_LOG_BIN=0&useSSL=false"`
 

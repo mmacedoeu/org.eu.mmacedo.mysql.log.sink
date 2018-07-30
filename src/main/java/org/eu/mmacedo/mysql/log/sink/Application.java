@@ -107,16 +107,14 @@ public class Application {
 
 	public static void main(final String[] args) throws Exception {
 		final Options options = new Options();
-		final Option startDateOption = Option.builder("startDate").longOpt("startDate").hasArg().desc("Start Date in ")
-				.build();
-		final Option duration = Option.builder("duration").longOpt("duration").hasArg().required()
+		final Option startDateOption = Option.builder().longOpt("startDate").hasArg().desc("Start Date in ").build();
+		final Option duration = Option.builder().longOpt("duration").hasArg().required()
 				.desc("Duration interval (hourly or daily)").build();
-		final Option thresholdOption = Option.builder("threshold").longOpt("threshold").hasArg().required()
+		final Option thresholdOption = Option.builder().longOpt("threshold").hasArg().required()
 				.desc("Threshold limit (integer >0) ").build();
-		final Option url = Option.builder("url").longOpt("spring.datasource.url").hasArg().desc("database url").build();
-		final Option file = Option.builder("accesslog").longOpt("accesslog").hasArg().desc("Access file to process")
-				.build();
-		final Option ansi = Option.builder("ansi").longOpt("spring.output.ansi.enabled").hasArg().build();
+		final Option url = Option.builder().longOpt("spring.datasource.url").hasArg().desc("database url").build();
+		final Option file = Option.builder().longOpt("accesslog").hasArg().desc("Access file to process").build();
+		final Option ansi = Option.builder().longOpt("spring.output.ansi.enabled").hasArg().build();
 		options.addOption("c", "clear", false, "empty database before processing");
 		options.addOption("q", "query", false, "no processing sink, just query");
 		options.addOption("h", "help", false, "show help.");
@@ -128,9 +126,9 @@ public class Application {
 		options.addOption(ansi);
 
 		final Options optionsHelp = new Options();
-		final Option durationHelp = Option.builder("duration").longOpt("duration").hasArg()
+		final Option durationHelp = Option.builder().longOpt("duration").hasArg()
 				.desc("Duration interval (hourly or daily)").build();
-		final Option thresholdHelp = Option.builder("threshold").longOpt("threshold").hasArg()
+		final Option thresholdHelp = Option.builder().longOpt("threshold").hasArg()
 				.desc("Threshold limit (integer >0) ").build();
 		optionsHelp.addOption("c", "clear", false, "clear logs database before processing");
 		optionsHelp.addOption("q", "query", false, "no processing sink, just query");
