@@ -28,6 +28,9 @@ usage: Mysql.Log.Sink
  -threshold,--threshold <arg>               Threshold limit (integer >0)
  -url,--spring.datasource.url <arg>         database url
 ```
+###Example
+
+`java -jar ./target/org.eu.mmacedo.mysql.log.sink-0.0.1-SNAPSHOT.jar --startDate=2017-01-01.15:00:00 --duration=hourly --threshold=200 --clear --accesslog="access.log" --spring.datasource.url="jdbc:mysql://localhost:3306/log?user=root&password=abc123&useServerPrepStmts=false&rewriteBatchedStatements=true&sessionVariables=@@global.general_log=OFF,bulk_insert_buffer_size=16777216,SQL_LOG_BIN=0&useSSL=false"`
 
 ## Sql
 
