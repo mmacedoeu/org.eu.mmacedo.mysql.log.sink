@@ -113,7 +113,7 @@ public class QueryThresholdService {
 			tt.setAddRowNumbering(true);
 			// tt.addSeparatorPolicy(new LastRowSeparatorPolicy());
 			tt.printTable();
-			LOGGER.info("Blocking IPs:");
+			LOGGER.info("Blocking IPs");
 			block(result, startDate, endDate, threshold);
 		} else {
 			LOGGER.info("Nothing found !");

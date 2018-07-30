@@ -23,7 +23,6 @@ import org.eu.mmacedo.mysql.log.sink.util.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,9 +33,6 @@ public class InboundFileSource {
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
 	private final Pattern pattern = Pattern.compile("\\|");
-
-	@Value("${accesslog}")
-	private String accesslog;
 
 	@Resource(name = "theExecutor")
 	private ExecutorService theExecutor;
@@ -74,22 +70,19 @@ public class InboundFileSource {
 			case 2: // IPv4
 				return new AbstractMap.SimpleEntry<>(2, getIpV4(f));
 			case 3: // Method
-				return new AbstractMap.SimpleEntry<>(3,
-						CompletableFuture.completedFuture(f));
+				return new AbstractMap.SimpleEntry<>(3, CompletableFuture.completedFuture(f));
 			case 4: // Response
 				return new AbstractMap.SimpleEntry<>(4, getResponse(f));
 			case 5: // Agent
-				return new AbstractMap.SimpleEntry<>(5,
-						CompletableFuture.completedFuture(f));
+				return new AbstractMap.SimpleEntry<>(5, CompletableFuture.completedFuture(f));
 			default: // Undefined
-				return new AbstractMap.SimpleEntry<>(index.get(),
-						CompletableFuture.completedFuture(null));
+				return new AbstractMap.SimpleEntry<>(index.get(), CompletableFuture.completedFuture(null));
 			}
 		}).collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (a, b) -> b, LinkedHashMap::new)));
 		// preserve order with LinkedHashMap
 	}
 
-	public void run() throws Exception {
+	public void run(final String accesslog) throws Exception {
 		LOGGER.info("Reading " + accesslog);
 		Files.lines(Paths.get(accesslog)).map(this::getRowAsync).forEach(r -> {
 			CompletableFuture.runAsync(() -> {

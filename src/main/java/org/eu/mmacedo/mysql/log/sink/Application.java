@@ -2,6 +2,7 @@ package org.eu.mmacedo.mysql.log.sink;
 
 import static pl.touk.throwing.ThrowingSupplier.unchecked;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -210,6 +211,28 @@ public class Application {
 				qry.clear();
 			}
 
+			String accesslog = env.getProperty("accesslog");
+			if (line.hasOption("accesslog")) {
+				final String fname = line.getOptionValue("accesslog");
+				final File f = new File(fname);
+				if (!f.exists() || f.isDirectory() || !f.canRead()) {
+					LOGGER.error("invalid file: " + fname);
+					final HelpFormatter formater = new HelpFormatter();
+					formater.printHelp("Mysql.Log.Sink", options);
+					System.exit(0);
+				} else {
+					accesslog = fname;
+				}
+			} else {
+				final File f = new File(accesslog);
+				if (!f.exists() || f.isDirectory() || !f.canRead()) {
+					LOGGER.error("invalid file: " + accesslog);
+					final HelpFormatter formater = new HelpFormatter();
+					formater.printHelp("Mysql.Log.Sink", options);
+					System.exit(0);
+				}
+			}
+
 			if (!line.hasOption("q")) {
 				final Timer timer = metrics.timer("Bulk insert");
 				disableKeys(jdbcTemplate);
@@ -223,7 +246,7 @@ public class Application {
 				final InboundFileSource in = ctx.getBean(InboundFileSource.class);
 				LOGGER.info("bulk insert started");
 				final Timer.Context bulk = timer.time();
-				in.run();
+				in.run(accesslog);
 				bulk.stop();
 				LOGGER.info("bulk insert finished");
 				enableKeys(jdbcTemplate);
